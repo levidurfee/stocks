@@ -2,4 +2,4 @@
 require_once('autoload.php');
 $i = new \levidurfee\StockData\Import();
 
-$i->getFiles();
+$i->getFiles()->importFiles();
