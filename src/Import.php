@@ -23,7 +23,9 @@ class Import extends StockData {
                 }
                 # Explode the CSV lines into variables
                 list($symbol, $cDate, $open, $high, $low, $close, $volume) = explode(',', $lines[$x]);
-                echo $symbol . "\r\n";
+                $date = date("Y-m-d H:i:s", strtotime($cDate));
+                $this->insertRow($symbol, $date, $open, $high, $low, $close, $volume);
+                echo "Added:\t" . $symbol . "\tDate:\t" . $date . "\tClose:\t" . $close . "\r\n";
             }
         }
     }
@@ -36,5 +38,26 @@ class Import extends StockData {
         $files = scandir($csvDir);
         $this->files = array_slice($files, 2);
         return $this;
+    }
+    
+    protected function insertRow($symbol, $date, $open, $high, $low, $close, $volume) {
+        $q = 'INSERT INTO nyse '
+                . '(symbol, date, open, high, low, close, volume) '
+                . 'VALUES '
+                . '(:symbol, :date, :open, :high, :low, :close, :volume)';
+        try {
+            $stmt = $this->db->prepare($q);
+            $stmt->bindParam(':symbol', $symbol, \PDO::PARAM_STR);
+            $stmt->bindParam(':date', $date, \PDO::PARAM_STR);
+            $stmt->bindParam(':open', $open, \PDO::PARAM_STR);
+            $stmt->bindParam(':high', $high, \PDO::PARAM_STR);
+            $stmt->bindParam(':low', $low, \PDO::PARAM_STR);
+            $stmt->bindParam(':close', $close, \PDO::PARAM_STR);
+            $stmt->bindParam(':volume', $volume, \PDO::PARAM_STR);
+            $stmt->execute();
+        } catch(PDOException $ex) {
+            echo $ex->getMessage() ."\r\n";
+        }
+        
     }
 }
