@@ -43,7 +43,7 @@ class Import extends StockData {
     }
     
     protected function insertRow($symbol, $date, $open, $high, $low, $close, $volume) {
-        $q = 'INSERT DELAYED INTO nyse '
+        $q = 'INSERT INTO nyse '
                 . '(symbol, date, open, high, low, close, volume) '
                 . 'VALUES '
                 . '(:symbol, :date, :open, :high, :low, :close, :volume)';
