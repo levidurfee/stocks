@@ -25,10 +25,10 @@ class Import extends StockData {
                 list($symbol, $cDate, $open, $high, $low, $close, $volume) = explode(',', $lines[$x]);
                 $date = date("Y-m-d H:i:s", strtotime($cDate));
                 $this->insertRow($symbol, $date, $open, $high, $low, $close, $volume);
-                echo "Added:\t" . $symbol . "\tDate:\t" . $date . "\tClose:\t" . $close . "\r\n";
-                $archive = ROOT . DS . 'data' . DS . 'archive' . DS . $this->files[$i];
-                rename($file, $archive);
+                echo "Added:\t" . $symbol . "\tDate:\t" . $date . "\tClose:\t" . $close . "\r\n";    
             }
+            $archive = ROOT . DS . 'data' . DS . 'archive' . DS . $this->files[$i];
+            rename($file, $archive);
         }
     }
     
