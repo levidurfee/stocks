@@ -26,6 +26,8 @@ class Import extends StockData {
                 $date = date("Y-m-d H:i:s", strtotime($cDate));
                 $this->insertRow($symbol, $date, $open, $high, $low, $close, $volume);
                 echo "Added:\t" . $symbol . "\tDate:\t" . $date . "\tClose:\t" . $close . "\r\n";
+                $archive = ROOT . DS . 'data' . DS . 'archive' . DS . $this->files[$i];
+                rename($file, $archive);
             }
         }
     }
