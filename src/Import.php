@@ -55,7 +55,7 @@ class Import extends StockData {
             $stmt->bindParam(':close', $close, \PDO::PARAM_STR);
             $stmt->bindParam(':volume', $volume, \PDO::PARAM_STR);
             $stmt->execute();
-        } catch(PDOException $ex) {
+        } catch(\PDOException $ex) {
             echo $ex->getMessage() ."\r\n";
         }
         
